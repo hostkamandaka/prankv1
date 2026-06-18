@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klaim Hadiah Anda</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    height:100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg,#0d3b66,#1d5d9b,#2e86ab);
+    overflow:hidden;
+  }
+  body {
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+
+  .card {
+    background:#fff;
+    border-radius:18px;
+    padding:48px 36px 36px;
+    max-width:420px;
+    width:100%;
+    text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+    position:relative;
+    animation: pop .4s ease-out;
+  }
+  @keyframes pop {
+    from { transform:scale(.92); opacity:0; }
+    to   { transform:scale(1); opacity:1; }
+  }
+
+  .badge {
+    position:absolute;
+    top:-15px; left:50%;
+    transform:translateX(-50%);
+    background:#d4af37;
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    padding:7px 18px;
+    border-radius:20px;
+    box-shadow:0 6px 14px rgba(212,175,55,.5);
+  }
+
+  .icon {
+    font-size:60px;
+    margin-bottom:14px;
+    animation: bounce 1.6s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform:translateY(0); }
+    50%     { transform:translateY(-8px); }
+  }
+
+  h1 {
+    font-size:23px;
+    color:#15213b;
+    margin-bottom:10px;
+    line-height:1.35;
+  }
+  p {
+    color:#5b6472;
+    font-size:14.5px;
+    margin-bottom:26px;
+    line-height:1.55;
+  }
+
+  button#claimBtn {
+    background:linear-gradient(135deg,#ff8a00,#e52e71);
+    color:#fff;
+    border:none;
+    padding:16px 44px;
+    font-size:16.5px;
+    font-weight:700;
+    letter-spacing:.5px;
+    border-radius:50px;
+    cursor:pointer;
+    box-shadow:0 10px 22px rgba(229,46,113,.45);
+    transition:transform .15s, box-shadow .15s;
+  }
+  button#claimBtn:hover  { transform:translateY(-2px); box-shadow:0 14px 28px rgba(229,46,113,.55); }
+  button#claimBtn:active { transform:translateY(0); }
+
+  .watermark {
+    margin-top:22px;
+    font-size:11px;
+    color:#b9bfc8;
+    letter-spacing:.3px;
+  }
+
+  #videoOverlay {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#000;
+    z-index:9999;
+  }
+  #videoOverlay video {
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:#000;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card" id="mainCard">
+    <div class="badge">TERVERIFIKASI</div>
+    <div class="icon">🎁</div>
+    <h1>Selamat! Anda Mendapatkan Hadiah</h1>
+    <p>Sistem kami telah memverifikasi bahwa Anda terpilih sebagai penerima hadiah. Klik tombol di bawah untuk klaim hadiah Anda sekarang.</p>
+    <button id="claimBtn">KLAIM</button>
+    <div class="watermark">Gx Dikzz Dev</div>
+  </div>
+
+  <div id="videoOverlay">
+    <video id="prankVideo" src="media/rickroll.mp4" autoplay playsinline disablePictureInPicture controlsList="nodownload noremoteplayback"></video>
+  </div>
+
+<script>
+  const card    = document.getElementById('mainCard');
+  const overlay = document.getElementById('videoOverlay');
+  const video   = document.getElementById('prankVideo');
+  const claimBtn = document.getElementById('claimBtn');
+
+  claimBtn.addEventListener('click', () => {
+    card.style.display = 'none';
+    overlay.style.display = 'block';
+    video.currentTime = 0;
+    video.play();
+  });
+
+  video.addEventListener('ended', () => {
+    overlay.style.display = 'none';
+    video.pause();
+    card.style.display = 'block';
+  });
+
+  // blokir klik kanan biar control video ga nongol
+  video.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+
+</body>
+</html>
